@@ -16,6 +16,6 @@ const CheckoutPage = ({ amount } : {amount: number}) => {
     const [clientSecret, setClientSecret] = useState("");
     const [loading, setLoading] = useState(false);
 
-}
+};
 
 export default CheckoutPage;
