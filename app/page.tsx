@@ -1,6 +1,6 @@
 'use client';
 
-
+import convertToSubcurrency from "@/lib/convertToSubcurrency";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -23,9 +23,20 @@ export default function Home() {
         <h1 className="text-4xl font-extrabold mb-2">Sonny</h1>
         <h2 className="text-2xl">
           has requested
-          <span className="font-bold">${amount}</span>
+          <span className="font-bold"> ${amount}</span>
         </h2>
       </div>
+
+      <Elements
+      stripe={stripePromise}
+      options={{
+        mode: "payment",
+        amount: convertToSubcurrency(amount), //it's cents
+        currency: "usd",
+      }}
+      >
+        <CheckoutPage amount= {amount}/>
+      </Elements>
     </main>
   );
 }
