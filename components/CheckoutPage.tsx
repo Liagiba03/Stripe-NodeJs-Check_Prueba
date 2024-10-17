@@ -47,6 +47,42 @@ const CheckoutPage = ({ amount } : {amount: number}) => {
             setLoading(false);
             return;
         }
+
+        const {error} = await stripe.confirmPayment({
+            elements,
+            clientSecret,
+            confirmParams: {
+                return_url: `http://www.localhost:3000/payment-success?amount=${amount}`,
+            },
+        });
+
+        //Si hay un error en la confirmación del pago.
+        if(error) {
+            // This point is only reached if there's an inmediate error when
+            // confirm the payment. Show the error to your customer (for example, payment
+            // details incomplete)
+            setErrorMessage(error.message);
+        }else{
+            //The payment UI automatically closes with a success animation.
+            //Your customer is redirected to your  'return_url'.
+        }
+        setLoading(false);
+    };
+
+    if(!clientSecret || !stripe || !elements){
+        return(
+            <div className="flex items-center justify-center">
+                <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid
+                border-current border-e-transparent aling-[-0.125em] text-surface
+                motion-reduce:animate-[spin_1.5s_linear_infinite] dark_text-white"
+                role="status">
+                    <span className="!absolute !-m-px !h-px !w.px !overflow-hidden !whitespace-nowrap
+                    !border-0 !p-0 ![clip_rect(0,0,0,0)]">
+                        Loading...
+                    </span>
+                </div>
+            </div>
+        );
     }
     
     return(
