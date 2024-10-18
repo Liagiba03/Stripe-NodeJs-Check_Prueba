@@ -11,6 +11,7 @@
   "dependencies": {
     "@stripe/react-stripe-js": "^2.8.1",
     "@stripe/stripe-js": "^4.8.0",
+    "anchor-pki": "^0.3.2",
     "next": "14.2.15",
     "react": "^18",
     "react-dom": "^18",
